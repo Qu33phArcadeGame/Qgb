@@ -1,0 +1,17 @@
+name: Build Qu33ph GB
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unzip the source
+        run: unzip -o qu33phgb.zip
+      - name: Get GBDK 4.3.0
+        run: curl -sSL https://github.com/gbdk-2020/gbdk-2020/releases/download/4.3.0/gbdk-linux64.tar.gz | tar xz
+      - name: Build
+        run: make GBDK_HOME=gbdk/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qu33ph-gbc
+          path: qu33ph.gbc
